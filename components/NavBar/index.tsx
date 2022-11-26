@@ -44,6 +44,7 @@ export const NavBar = () => {
           <ul className="flex flex-col p-4 mt-4 content-start border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <NavBarTile text="Rental Contract" link="/" />
             <NavBarTile text="Privacy Policy" link="/privacy" />
+            <NavBarTile text="Wishlist" link="/wishlist" />
           </ul>
         </div>
       </div>

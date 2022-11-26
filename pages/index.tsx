@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FileUpload } from "../components/FileUpload";
 import { SelectProvince } from "../components/SelectProvince";
+import wishlist from "./wishlist";
 
 export default function Home() {
   return (
