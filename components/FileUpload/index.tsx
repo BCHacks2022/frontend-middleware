@@ -29,7 +29,12 @@ export const FileUpload = () => {
             PDF, Microsoft Word
           </p>
         </div>
-        <input id="dropzone-file" type="file" className="hidden" />
+        <input
+          id="dropzone-file"
+          type="file"
+          className="hidden"
+          accept="application/pdf, application/msword"
+        />
       </label>
     </div>
   );
