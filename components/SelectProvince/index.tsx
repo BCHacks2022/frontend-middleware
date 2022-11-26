@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 
 export const SelectProvince = () => {
-  const [selectedProvince, setSelectedProvince] = useState(
-    "Select Your Province"
-  );
+  const [selectedProvince, setSelectedProvince] = useState("SL");
   return (
-    <div className="">
+    <div>
       <label
-        htmlFor="countries"
-        className="block mb-2 text-sm font-medium text-violet-900 dark:text-white"
+        htmlFor="provinces"
+        className="block mb-2 text-sm font-medium text-purple-900 dark:text-white"
       >
         Select an option
       </label>
 
       <select
-        id="countries"
-        className=" bg-violet-50 border border-violet-300 text-white text-sm rounded-lg focus:ring-white-500 focus:border-white-500 block w-full p-2.5 bg-violet-700 border-violet-600 placeholder-violet-400 text-white focus:ring-white-500 focus:border-white-500"
-        defaultValue={selectedProvince}
+        id="provinces"
+        className=" bg-primary bg-opacity-80 border border-primary text-white text-sm rounded-lg focus:ring-primaryLight focus:border-primary  block w-full p-2.5  placeholder-primary text-white "
         onChange={(e) => setSelectedProvince(e.target.value)}
+        defaultValue={selectedProvince}
       >
+        <option value="SL">Select your province</option>
         <option value="AB">Alberta</option>
         <option value="BC">British Columbia</option>
         <option value="MB">Manitoba</option>
