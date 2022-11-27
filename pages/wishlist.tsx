@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
 import { company } from "../lib/models/company";
 import { DeleteWishListModal } from "../components/wishlist/deleteFrom";
 import { AddWishListModal } from "../components/AddWishListModal";
 import { Deso } from "deso-protocol";
-import { GetSingleProfileRequest, GetSingleProfileResponse } from "deso-protocol-types";
+import {
+  GetSingleProfileRequest,
+  GetSingleProfileResponse,
+} from "deso-protocol-types";
+import { useEffect, useState } from "react";
 
 async function getUser() {
   const res = localStorage.getItem("deso_user_key");
@@ -12,7 +15,8 @@ async function getUser() {
 
 export default function wishlist() {
   const [showModal, setShowModal] = useState(false);
-  const [userResponse, setUserResponse] = useState<GetSingleProfileResponse | null>(null);
+  const [userResponse, setUserResponse] =
+    useState<GetSingleProfileResponse | null>(null);
   const [userWish, setUserWish] = useState<company[]>([]);
 
   var deso: Deso;
@@ -20,13 +24,16 @@ export default function wishlist() {
   useEffect(() => {
     deso = new Deso();
     checkLogin();
-  }, [null])
+  }, [null]);
 
   const checkLogin = async () => {
     // localStorage.setItem("wishlist", [])!
     const userKey = await getUser();
     if (userKey != "null") {
-      var req = { PublicKeyBase58Check: userKey as string, NoErrorOnMissing: false };
+      var req = {
+        PublicKeyBase58Check: userKey as string,
+        NoErrorOnMissing: false,
+      };
       var userProfile = await deso.user.getSingleProfile(req);
       setUserResponse(userProfile);
       getUserWish(userProfile);
@@ -34,10 +41,13 @@ export default function wishlist() {
       // not logged in this page shouldn't be visible
       window.location.href = "/privacy";
     }
-  }
+  };
 
   const getUserWish = async (p: GetSingleProfileResponse) => {
-    if (p!.Profile!.ExtraData != null || localStorage.getItem("wishlist") != null) {
+    if (
+      p!.Profile!.ExtraData != null ||
+      localStorage.getItem("wishlist") != null
+    ) {
       var data = localStorage.getItem("wishlist")!;
       if (data) {
         var wishes = await JSON.parse(data);
@@ -45,18 +55,14 @@ export default function wishlist() {
         for (const [key, value] of Object.entries(wishes)) {
           console.log(value);
           var j = JSON.parse(value as string);
-          compWishes.push(new company(
-            j['image'],
-            j['name'],
-            j['link'],
-            j['elId'],
-            j['score'],
-          ));
+          compWishes.push(
+            new company(j["image"], j["name"], j["link"], j["elId"], j["score"])
+          );
         }
         setUserWish(compWishes);
       }
     }
-  }
+  };
 
   const keyUpHandler = (e: any) => {
     var val = e.target.value as string;
@@ -91,7 +97,7 @@ export default function wishlist() {
     var deletedIndex = -1;
     for (const [key, value] of Object.entries(data)) {
       var comp = JSON.parse(value as string);
-      if (comp['elId'] == id) {
+      if (comp["elId"] == id) {
         delete data[key];
         break;
       }
@@ -104,7 +110,7 @@ export default function wishlist() {
     var wishes = [...userWish];
     wishes.push(c);
     setUserWish(wishes);
-  }
+  };
 
   return (
     <div className="w-screen h-screen flex justify-center bg-white">
@@ -146,9 +152,7 @@ export default function wishlist() {
                   className="companyRow relative bg-white border-b dark:border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-100 cursor-pointer"
                   id={c.elId as string}
                 >
-                  <th
-                    className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white"
-                  >
+                  <th className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                     <img
                       className="w-12 h-12 rounded-full"
                       src={c.image as string}
