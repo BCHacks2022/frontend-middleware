@@ -1,27 +1,48 @@
 import axios from "axios";
-import { DOMElement, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { LoadingIndicator } from "../components/Loading";
+import { PrivacySummary } from "../components/PrivacySummary";
 
 export default function Home() {
-  const privacyPolicyTextRef = useRef<HTMLInputElement>(null);
-
+  const privacyPolicyTextRef = useRef<HTMLTextAreaElement>(null);
+  const [policyResult, setPolicyResult] = useState("");
+  const [loading, setLoading] = useState(false);
+  //const router = useRouter();
   const submitUrl = () => {
     console.log((document.getElementById("url")! as HTMLInputElement).value);
   };
 
   const submitText = async () => {
     try {
+      setLoading(true);
       const privacypolicytext = privacyPolicyTextRef.current?.value ?? "";
       const result = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/pp`,
-        {
-          text: privacypolicytext,
-        }
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/pp?text=${privacypolicytext}`
       );
-      console.log(result.data);
+      setLoading(false);
+      setPolicyResult(result.data);
     } catch (e) {
       console.log(e);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="w-screen h-screen bg-primary bg-opacity-40 flex items-center justify-center">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+  if (policyResult !== "") {
+    return (
+      <div className="w-screen bg-white ">
+        <h1 className="text-xl font-bold text-primary ml-7 pt-4">
+          Result of your Privacy Policy
+        </h1>
+        <PrivacySummary data={policyResult as unknown as string[][]} />
+      </div>
+    );
+  }
 
   return (
     <div className="screen w-full h-screen  justify-center bg-white py-5">
@@ -64,6 +85,7 @@ export default function Home() {
           rows={10}
           className="p-7 mx-auto w-9/12 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
           placeholder="Paste privacy policy here ..."
+          ref={privacyPolicyTextRef}
         ></textarea>
       </div>
 
@@ -72,7 +94,6 @@ export default function Home() {
           type="button"
           className="text-white content-center bg-primary font-medium rounded-lg text-sm px-20 py-2.5 mt-2 mx-5 mb-2 focus:outline-none hover:bg-opacity-80"
           value="Submit"
-          ref={privacyPolicyTextRef}
           onClick={submitText}
         />
       </div>
