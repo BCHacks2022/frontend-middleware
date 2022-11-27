@@ -11,6 +11,163 @@ type AccordionProps = {
   addNewWl: (c: company) => void;
 };
 
+export const companies = [
+  new company(
+    "/fb.png",
+    "Facebook",
+    "https://www.facebook.com/privacy/policy/",
+    "fb-el",
+    "14",
+    `[
+		[
+		  "information and content you provide",
+		  "neutral"
+		],
+		[
+		  "we collect the content, communications and other information you provide when you use our products, including when you sign up for an account, create or share content, and message or communicate with others",
+		  "neutral"
+		],
+		[
+		  "this can include information in or about the content you provide (like metadata), such as the location of a photo or the date a file was created",
+		  "neutral"
+		],
+		[
+		  "it can also include what you see through features we provide, such as our camera, so we can do things like suggest masks and filters that you might like, or give you tips on using camera formats",
+		  "neutral"
+		],
+		[
+		  "our systems automatically process content and communications you and others provide to analyze context and what's in them for the purposes described below",
+		  "negative"
+		],
+		[
+		  "learn more about how you can control who can see the things you share",
+		  "positive"
+		],
+		[
+		  "data with special protections: you can choose to provide information in your facebook profile fields or life events about your religious views, political views, who you are interested in, or your health",
+		  "neutral"
+		],
+		[
+		  "this and other information (such as racial or ethnic origin, philosophical beliefs or trade union membership) could be subject to special protections under the laws of your country",
+		  "neutral"
+		],
+		[
+		  "networks and connections",
+		  "neutral"
+		],
+		[
+		  "we collect information about the people, accounts, hashtags and facebook groups, and pages you are connected to and how you interact with them across our products, such as people you communicate with the most or groups you are part of",
+		  "neutral"
+		],
+		[
+		  "we also collect contact information if you choose to upload, sync or import it from a device (such as an address book or call log or sms log history), which we use for things like helping you and others find people you may know and for the other purposes listed below",
+		  "neutral"
+		],
+		[
+		  "your usage",
+		  "neutral"
+		],
+		[
+		  "we collect information about how you use our products, such as the types of content you view or engage with; the features you use; the actions you take; the people or accounts you interact with; and the time, frequency and duration of your activities",
+		  "neutral"
+		],
+		[
+		  "for example, we log when you're using and have last used our products, and what posts, videos and other content you view on our products",
+		  "neutral"
+		],
+		[
+		  "we also collect information about how you use features like our camera",
+		  "neutral"
+		],
+		[
+		  "information about transactions made on our products",
+		  "neutral"
+		],
+		[
+		  "if you use our products for purchases or other financial transactions (such as when you make a purchase in a game or make a donation), we collect information about the purchase or transaction",
+		  "neutral"
+		],
+		[
+		  "this includes payment information, such as your credit or debit card number and other card information; other account and authentication information; and billing, shipping and contact details",
+		  "neutral"
+		],
+		[
+		  "things others do and information they provide about you",
+		  "neutral"
+		],
+		[
+		  "we also receive and analyze content, communications and information that other people provide when they use our products",
+		  "neutral"
+		],
+		[
+		  "this can include information about you, such as when others share or comment on a photo of you, send a message to you, or upload, sync or import your contact information",
+		  "neutral"
+		],
+		[
+		  "information we obtain from these devices includes: device attributes: information such as the operating system, hardware and software versions, battery level, signal strength, available storage space, browser type, app and file names and types, and plugins",
+		  "neutral"
+		],
+		[
+		  "device operations: information about operations and behaviors performed on the device, such as whether a window is foregrounded or backgrounded, or mouse movements (which can help distinguish humans from bots) identifiers: unique identifiers, device ids, and other identifiers, such as from games, apps or accounts you use, and family device ids (or other identifiers unique to meta company products associated with the same device or account)",
+		  "neutral"
+		],
+		[
+		  "device signals: bluetooth signals, and information about nearby wi-fi access points, beacons, and cell towers",
+		  "neutral"
+		],
+		[
+		  "data from device settings: information you allow us to receive through device settings you turn on, such as access to your gps location, camera or photos",
+		  "neutral"
+		],
+		[
+		  "network and connections: information such as the name of your mobile operator or isp, language, time zone, mobile phone number, ip address, connection speed and, in some cases, information about other devices that are nearby or on your network, so we can do things like help you stream a video from your phone to your tv.",
+		  "neutral"
+		]
+	  ]`
+  ),
+  new company(
+    "/google.png",
+    "Google",
+    "https://policies.google.com/privacy?hl=en-US",
+    "g-el",
+    "25",
+    ""
+  ),
+  new company("/mlh.png", "MLH", "https://mlh.io/privacy", "mlh-el", "83", ""),
+  new company(
+    "/ddg.png",
+    "DuckDuckGo",
+    "https://duckduckgo.com/privacy",
+    "ddg-el",
+    "93",
+    ""
+  ),
+  new company(
+    "/amazon.png",
+    "Amazon",
+    "https://www.amazon.ca/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ",
+    "am-el",
+    "33",
+    ""
+  ),
+  new company(
+    "/snapchat.png",
+    "Snapchat",
+    "https://snap.com/en-US/privacy/privacy-policy",
+    "sc-el",
+    "35",
+    ""
+  ),
+  new company(
+    "/ig.png",
+    "Instagram",
+    "https://help.instagram.com/155833707900388",
+    "ig-el",
+    "20",
+    ""
+  ),
+];
+
 const SearchAccordion = ({ title, isOpen, user, addNewWl }: AccordionProps) => {
   const [isOpened, setOpened] = useState<boolean>(isOpen);
   const [height, setHeight] = useState<string>("0px");
@@ -34,52 +191,6 @@ const SearchAccordion = ({ title, isOpen, user, addNewWl }: AccordionProps) => {
       setSC(sc);
     }
   };
-
-  const companies = [
-    new company(
-      "/fb.png",
-      "Facebook",
-      "https://www.facebook.com/privacy/policy/",
-      "fb-el",
-      "14"
-    ),
-    new company(
-      "/google.png",
-      "Google",
-      "https://policies.google.com/privacy?hl=en-US",
-      "g-el",
-      "25"
-    ),
-    new company("/mlh.png", "MLH", "https://mlh.io/privacy", "mlh-el", "83"),
-    new company(
-      "/ddg.png",
-      "DuckDuckGo",
-      "https://duckduckgo.com/privacy",
-      "ddg-el",
-      "93"
-    ),
-    new company(
-      "/amazon.png",
-      "Amazon",
-      "https://www.amazon.ca/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ",
-      "am-el",
-      "33"
-    ),
-    new company(
-      "/snapchat.png",
-      "Snapchat",
-      "https://snap.com/en-US/privacy/privacy-policy",
-      "sc-el",
-      "35"
-    ),
-    new company(
-      "/ig.png",
-      "Instagram",
-      "https://help.instagram.com/155833707900388",
-      "ig-el",
-      "20"
-    ),
-  ];
 
   const HandleOpening = () => {
     setOpened(!isOpened);

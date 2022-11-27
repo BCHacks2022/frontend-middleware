@@ -1,6 +1,6 @@
 export const PrivacySummary = ({ data }: { data: string[][] }) => {
   return (
-    <div className="w-screen flex flex-row overflow-x-auto justify-center items-center px-5 py-10">
+    <div className="w-screen flex flex-row overflow-x-auto justify-center items-center px-8 py-10">
       <div className="max-w-full">
         {data.map((sentence) => {
           switch (sentence[1]) {

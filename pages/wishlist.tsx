@@ -5,6 +5,7 @@ import { Deso } from "deso-protocol";
 import { GetSingleProfileResponse } from "deso-protocol-types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 async function getUser() {
   const res = localStorage.getItem("deso_user_key");
@@ -54,7 +55,14 @@ export default function Wishlist() {
           console.log(value);
           var j = JSON.parse(value as string);
           compWishes.push(
-            new company(j["image"], j["name"], j["link"], j["elId"], j["score"])
+            new company(
+              j["image"],
+              j["name"],
+              j["link"],
+              j["elId"],
+              j["score"],
+              j["policyText"]
+            )
           );
         }
         setUserWish(compWishes);
@@ -175,9 +183,11 @@ export default function Wishlist() {
                     </div>
                   </td>
                   <td className="py-4">
-                    <button className="border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-blue-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                      View
-                    </button>
+                    <Link href={"/privacy_company_results"}>
+                      <button className="border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-blue-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                        View
+                      </button>
+                    </Link>
                     <DeleteWishListModal callback={handleDelete} comp={c} />
                   </td>
                 </tr>
