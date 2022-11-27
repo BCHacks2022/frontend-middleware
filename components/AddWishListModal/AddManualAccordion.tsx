@@ -22,7 +22,6 @@ const AddManualAccordion = ({ content, isOpen, addNewWl }: AccordionProps) => {
 
   const handleAdd = () => {
     var data = localStorage.getItem("wishlist");
-    console.log(1);
 
     var c = new company(
       "/placeholder.jpg",
