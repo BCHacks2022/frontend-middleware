@@ -31,8 +31,6 @@ const SearchAccordion = ({ title, isOpen, user, addNewWl }: AccordionProps) => {
       for (const [key, value] of Object.entries(prev)) {
         sc.push(await JSON.parse(value as string)["name"]);
       }
-      console.log(sc);
-      console.log(sc.indexOf("1"));
       setSC(sc);
     }
   };
