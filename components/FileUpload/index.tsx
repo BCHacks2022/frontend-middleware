@@ -1,4 +1,6 @@
-export const FileUpload = () => {
+import { ChangeEvent } from "react";
+
+export const FileUpload = ({ onchange }: { onchange: (e: ChangeEvent<HTMLInputElement>) => void }) => {
   return (
     <div className="flex items-center justify-center ">
       <label
@@ -30,6 +32,7 @@ export const FileUpload = () => {
         <input
           id="file-upload"
           type="file"
+          onChange={onchange}
           className="hidden"
           accept="application/pdf, application/msword"
         />
