@@ -28,6 +28,9 @@ export default function RentalAgreementOutPut({ missingFields, rentalAgreement }
     }
 
     useEffect(() => {
+        if (missingFields == null) {
+            missingFields = [];
+        }
         if (missingFields?.length == 0) {
             setRightsViolated(false);
         }
@@ -95,7 +98,7 @@ export default function RentalAgreementOutPut({ missingFields, rentalAgreement }
                                 {rightsViolated ? "The following rights are being violated:" : ""}
                             </h1>
 
-                            {missingFields!.map((c) => {
+                            {missingFields?.map((c) => {
                                 return (
                                     <div key={c} className="flex w-full items-center justify-center">
                                         {rightsViolated ? (
@@ -122,7 +125,7 @@ export default function RentalAgreementOutPut({ missingFields, rentalAgreement }
                                 );
                             })}
 
-                            {warnings.map((c) => {
+                            {warnings?.map((c) => {
                                 return (
 
                                     <div key={c} className="flex w-full items-center pt-3 justify-center">
