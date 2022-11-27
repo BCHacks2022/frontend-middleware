@@ -4,8 +4,8 @@ import { NavBarTile } from "./NavBarTile";
 export const NavBar = () => {
   return (
     <nav className="bg-primary border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
-      <div className="flex flex-wrap justify-between">
-        <div className="container flex flex-wrap items-center justify-start mx-auto">
+      <div className="flex  justify-between">
+        <div className="container flex flex-wrap  justify-start mx-auto">
           <a href="#" className="flex items-center">
             <Image
               src="/logolight.png"
