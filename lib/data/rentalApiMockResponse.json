@@ -10,16 +10,5 @@
            "warning onea",
            "warning two"
        ]
-     },
-     {
-        "missing": [
-            "one",
-            "two"
-          ],
-      
-        "warning": [
-            "warning onea",
-            "warning two"
-        ]
-      }
+     }
 ]
