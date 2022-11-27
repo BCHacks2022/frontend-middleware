@@ -18,6 +18,7 @@ export const NavBar = () => {
   const router = useRouter();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     deso = new Deso();
     checkLogin();
   }, []);

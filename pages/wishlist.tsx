@@ -19,6 +19,7 @@ export default function Wishlist() {
   var deso: Deso;
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     deso = new Deso();
     checkLogin();
   }, []);

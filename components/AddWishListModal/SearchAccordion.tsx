@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  GetSingleProfileRequest,
-  GetSingleProfileResponse,
-} from "deso-protocol-types";
+import { GetSingleProfileResponse } from "deso-protocol-types";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { company } from "../../lib/models/company";
-import { desoAddressToECKeyPair } from "deso-protocol/src/lib/utils/Utils";
 import Image from "next/image";
 type AccordionProps = {
   title: string;
@@ -15,13 +11,7 @@ type AccordionProps = {
   addNewWl: (c: company) => void;
 };
 
-const SearchAccordion = ({
-  title,
-  content,
-  isOpen,
-  user,
-  addNewWl,
-}: AccordionProps) => {
+const SearchAccordion = ({ title, isOpen, user, addNewWl }: AccordionProps) => {
   const [isOpened, setOpened] = useState<boolean>(isOpen);
   const [height, setHeight] = useState<string>("0px");
   const contentElement = useRef(null);
@@ -30,6 +20,7 @@ const SearchAccordion = ({
 
   useEffect(() => {
     getSavedWL();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [null]);
 
   const getSavedWL = async () => {
