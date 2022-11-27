@@ -1,6 +1,7 @@
 import { Deso } from "deso-protocol";
 import { GetSingleProfileResponse } from "deso-protocol-types";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { NavBarTile } from "./NavBarTile";
@@ -14,25 +15,30 @@ export const NavBar = () => {
   const [userReponse, setUserResponse] =
     useState<GetSingleProfileResponse | null>(null);
   var deso: Deso;
+  const router = useRouter();
 
   useEffect(() => {
     deso = new Deso();
     checkLogin();
-  }, [null]);
+  }, []);
 
   const checkLogin = async () => {
     const userKey = await getUser();
+    console.log(userKey);
     if (userKey != "null") {
       var req = {
         PublicKeyBase58Check: userKey as string,
         NoErrorOnMissing: false,
       };
       var userProfile = await deso.user.getSingleProfile(req);
+      console.log(1111);
+
       setUserResponse(userProfile);
     }
   };
 
   const handleDeso = async () => {
+    console.log("userProfile");
     let user = await deso.identity.login();
 
     var req = { PublicKeyBase58Check: user.key, NoErrorOnMissing: false };
@@ -47,6 +53,7 @@ export const NavBar = () => {
       userReponse!.Profile?.PublicKeyBase58Check as string
     );
     setUserResponse(null);
+    router.push("/privacy");
   };
 
   return (

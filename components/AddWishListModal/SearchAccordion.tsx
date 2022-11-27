@@ -1,17 +1,27 @@
 import React, { useState, useRef, useEffect } from "react";
-import { GetSingleProfileRequest, GetSingleProfileResponse } from "deso-protocol-types";
+import {
+  GetSingleProfileRequest,
+  GetSingleProfileResponse,
+} from "deso-protocol-types";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { company } from "../../lib/models/company";
 import { desoAddressToECKeyPair } from "deso-protocol/src/lib/utils/Utils";
+import Image from "next/image";
 type AccordionProps = {
   title: string;
   content: string;
   isOpen: boolean;
-  user: GetSingleProfileResponse | null
-  addNewWl: (c: company) => void
+  user: GetSingleProfileResponse | null;
+  addNewWl: (c: company) => void;
 };
 
-const SearchAccordion = ({ title, content, isOpen, user, addNewWl }: AccordionProps) => {
+const SearchAccordion = ({
+  title,
+  content,
+  isOpen,
+  user,
+  addNewWl,
+}: AccordionProps) => {
   const [isOpened, setOpened] = useState<boolean>(isOpen);
   const [height, setHeight] = useState<string>("0px");
   const contentElement = useRef(null);
@@ -20,8 +30,7 @@ const SearchAccordion = ({ title, content, isOpen, user, addNewWl }: AccordionPr
 
   useEffect(() => {
     getSavedWL();
-
-  }, [null])
+  }, [null]);
 
   const getSavedWL = async () => {
     var data = localStorage.getItem("wishlist");
@@ -29,60 +38,59 @@ const SearchAccordion = ({ title, content, isOpen, user, addNewWl }: AccordionPr
       var prev = await JSON.parse(data);
       var sc: string[] = [];
       for (const [key, value] of Object.entries(prev)) {
-        sc.push(await JSON.parse(value as string)['name']);
+        sc.push(await JSON.parse(value as string)["name"]);
       }
       console.log(sc);
-      console.log(sc.indexOf('1'));
+      console.log(sc.indexOf("1"));
       setSC(sc);
     }
-  }
+  };
 
   const companies = [
     new company(
-      "fb.png",
+      "/fb.png",
       "Facebook",
       "https://www.facebook.com/privacy/policy/",
       "fb-el",
       "14"
     ),
     new company(
-      "google.png",
+      "/google.png",
       "Google",
       "https://policies.google.com/privacy?hl=en-US",
       "g-el",
       "25"
     ),
-    new company("mlh.png", "MLH", "https://mlh.io/privacy", "mlh-el", "83"),
+    new company("/mlh.png", "MLH", "https://mlh.io/privacy", "mlh-el", "83"),
     new company(
-      "ddg.png",
+      "/ddg.png",
       "DuckDuckGo",
       "https://duckduckgo.com/privacy",
       "ddg-el",
       "93"
     ),
     new company(
-      "amazon.png",
+      "/amazon.png",
       "Amazon",
       "https://www.amazon.ca/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ",
       "am-el",
       "33"
     ),
     new company(
-      "snapchat.png",
+      "/snapchat.png",
       "Snapchat",
       "https://snap.com/en-US/privacy/privacy-policy",
       "sc-el",
       "35"
     ),
     new company(
-      "ig.png",
+      "/ig.png",
       "Instagram",
       "https://help.instagram.com/155833707900388",
       "ig-el",
       "20"
     ),
   ];
-
 
   const HandleOpening = () => {
     setOpened(!isOpened);
@@ -104,7 +112,7 @@ const SearchAccordion = ({ title, content, isOpen, user, addNewWl }: AccordionPr
       var prev = JSON.parse(data);
       var sc: string[] = [];
       for (var i = 0; i < prev.length; i++) {
-        sc.push(prev[i]['name']);
+        sc.push(prev[i]["name"]);
       }
       var i = prev != null ? Object.keys(prev).length : 0;
       prev[c.elId as string] = c.toString();
@@ -133,25 +141,42 @@ const SearchAccordion = ({ title, content, isOpen, user, addNewWl }: AccordionPr
       >
         <table>
           <tbody>
-            {
-              companies.map((c) => {
-                if (selectedCompanies.indexOf(c.name as string) != -1) {
-                  return;
-                }
-                return <tr className="companyRow relative m-5 hover:bg-gray-50 dark:hover:bg-gray-100 cursor-pointer" key={c.elId as string}>
-                  <td><img className="w-12 inline-block h-12 rounded-full" src={c.image as string} /></td>
-                  <td><span className="text-blue-400">{c.name}</span></td>
+            {companies.map((c) => {
+              if (selectedCompanies.indexOf(c.name as string) != -1) {
+                return;
+              }
+              return (
+                <tr
+                  className="companyRow relative m-5 hover:bg-gray-50 dark:hover:bg-gray-100 cursor-pointer"
+                  key={c.elId as string}
+                >
+                  <td>
+                    <Image
+                      className="w-12 inline-block h-12 rounded-full"
+                      alt="Company Logo"
+                      width={48}
+                      height={48}
+                      src={c.image as string}
+                    />
+                  </td>
+                  <td>
+                    <span className="text-blue-400">{c.name}</span>
+                  </td>
                   <td></td>
-                  <td><button onClick={(e) => {
-                    addToWishList(e, c)
-                    addNewWl(c);
-                  }
-                  } className="ml-20 border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-red-600 outline-none focus:outline-nonemb-1 ease-linear transition-all duration-150">
-                    Add
-                  </button></td>
+                  <td>
+                    <button
+                      onClick={(e) => {
+                        addToWishList(e, c);
+                        addNewWl(c);
+                      }}
+                      className="ml-20 border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-red-600 outline-none focus:outline-nonemb-1 ease-linear transition-all duration-150"
+                    >
+                      Add
+                    </button>
+                  </td>
                 </tr>
-              })
-            }
+              );
+            })}
           </tbody>
         </table>
       </div>

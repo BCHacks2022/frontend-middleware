@@ -2,19 +2,16 @@ import { company } from "../lib/models/company";
 import { DeleteWishListModal } from "../components/wishlist/deleteFrom";
 import { AddWishListModal } from "../components/AddWishListModal";
 import { Deso } from "deso-protocol";
-import {
-  GetSingleProfileRequest,
-  GetSingleProfileResponse,
-} from "deso-protocol-types";
+import { GetSingleProfileResponse } from "deso-protocol-types";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 async function getUser() {
   const res = localStorage.getItem("deso_user_key");
   return res;
 }
 
-export default function wishlist() {
-  const [showModal, setShowModal] = useState(false);
+export default function Wishlist() {
   const [userResponse, setUserResponse] =
     useState<GetSingleProfileResponse | null>(null);
   const [userWish, setUserWish] = useState<company[]>([]);
@@ -24,12 +21,12 @@ export default function wishlist() {
   useEffect(() => {
     deso = new Deso();
     checkLogin();
-  }, [null]);
+  }, []);
 
   const checkLogin = async () => {
     // localStorage.setItem("wishlist", [])!
     const userKey = await getUser();
-    if (userKey != "null") {
+    if (userKey != null) {
       var req = {
         PublicKeyBase58Check: userKey as string,
         NoErrorOnMissing: false,
@@ -153,8 +150,11 @@ export default function wishlist() {
                   id={c.elId as string}
                 >
                   <th className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
-                    <img
+                    <Image
                       className="w-12 h-12 rounded-full"
+                      alt="company logo"
+                      width={50}
+                      height={50}
                       src={c.image as string}
                     />
                     <div className="px-5 text-base font-semibold text-gray-600">
