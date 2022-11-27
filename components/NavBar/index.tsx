@@ -4,8 +4,8 @@ import { NavBarTile } from "./NavBarTile";
 export const NavBar = () => {
   return (
     <nav className="bg-primary border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
-      <div className="flex flex-wrap justify-between">
-        <div className="container flex flex-wrap items-center justify-start mx-auto">
+      <div className="flex  justify-between">
+        <div className="container flex flex-wrap  justify-start mx-auto">
           <a href="#" className="flex items-center">
             <Image
               src="/logolight.png"
@@ -23,6 +23,7 @@ export const NavBar = () => {
             <ul className="flex flex-col p-4 mt-4 content-start border border-primary rounded-lg bg-primary md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-primary ">
               <NavBarTile text="Rental Contract" link="/" />
               <NavBarTile text="Privacy Policy" link="/privacy" />
+              <NavBarTile text="Wishlist" link="/wishlist" />
             </ul>
           </div>
         </div>
