@@ -1,12 +1,26 @@
-import { DOMElement, useState } from "react";
+import axios from "axios";
+import { DOMElement, useRef, useState } from "react";
 
 export default function Home() {
+  const privacyPolicyTextRef = useRef<HTMLInputElement>(null);
+
   const submitUrl = () => {
     console.log((document.getElementById("url")! as HTMLInputElement).value);
   };
 
-  const submitText = () => {
-    console.log((document.getElementById("test")! as HTMLInputElement).value);
+  const submitText = async () => {
+    try {
+      const privacypolicytext = privacyPolicyTextRef.current?.value ?? "";
+      const result = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/pp`,
+        {
+          text: privacypolicytext,
+        }
+      );
+      console.log(result.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -58,6 +72,7 @@ export default function Home() {
           type="button"
           className="text-white content-center bg-primary font-medium rounded-lg text-sm px-20 py-2.5 mt-2 mx-5 mb-2 focus:outline-none hover:bg-opacity-80"
           value="Submit"
+          ref={privacyPolicyTextRef}
           onClick={submitText}
         />
       </div>
