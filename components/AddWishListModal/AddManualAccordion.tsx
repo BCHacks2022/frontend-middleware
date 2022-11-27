@@ -28,7 +28,8 @@ const AddManualAccordion = ({ content, isOpen, addNewWl }: AccordionProps) => {
       (document.getElementById("titleInput")! as HTMLInputElement).value,
       "",
       "a" + Date.now(),
-      'Pending'
+      "Pending",
+      ""
     );
     if (data) {
       var prev = JSON.parse(data);
