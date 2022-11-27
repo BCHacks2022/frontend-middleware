@@ -1,7 +1,5 @@
 import { Deso } from "deso-protocol";
-import { GetSingleProfileRequest, GetSingleProfileResponse } from "deso-protocol-types";
-import { Identity } from "deso-protocol/src/lib/identity/Identity";
-import { request } from "http";
+import { GetSingleProfileResponse } from "deso-protocol-types";
 import Image from "next/image";
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -13,38 +11,43 @@ async function getUser() {
 }
 
 export const NavBar = () => {
-  const [userReponse, setUserResponse] = useState<GetSingleProfileResponse | null>(null);
+  const [userReponse, setUserResponse] =
+    useState<GetSingleProfileResponse | null>(null);
   var deso: Deso;
 
   useEffect(() => {
     deso = new Deso();
     checkLogin();
-  }, [null])
+  }, [null]);
 
   const checkLogin = async () => {
     const userKey = await getUser();
     if (userKey != "null") {
-      var req = { PublicKeyBase58Check: userKey as string, NoErrorOnMissing: false };
+      var req = {
+        PublicKeyBase58Check: userKey as string,
+        NoErrorOnMissing: false,
+      };
       var userProfile = await deso.user.getSingleProfile(req);
       setUserResponse(userProfile);
     }
-  }
+  };
 
   const handleDeso = async () => {
-
     let user = await deso.identity.login();
 
     var req = { PublicKeyBase58Check: user.key, NoErrorOnMissing: false };
     var userProfile = await deso.user.getSingleProfile(req);
 
     setUserResponse(userProfile);
-  }
+  };
 
   const handleLogout = async () => {
     const deso = new Deso();
-    await deso.identity.logout(userReponse!.Profile?.PublicKeyBase58Check as string);
+    await deso.identity.logout(
+      userReponse!.Profile?.PublicKeyBase58Check as string
+    );
     setUserResponse(null);
-  }
+  };
 
   return (
     <nav className="bg-primary border-gray-200 px-2  rounded ">
@@ -68,26 +71,32 @@ export const NavBar = () => {
               <NavBarTile text="Rental Contract" link="/" />
               <NavBarTile text="Privacy Policy" link="/privacy" />
 
-              {userReponse ? <NavBarTile text="Wishlist" link="/wishlist" /> : <div></div>}
+              {userReponse ? (
+                <NavBarTile text="Wishlist" link="/wishlist" />
+              ) : (
+                <div></div>
+              )}
             </ul>
           </div>
         </div>
         <div className="flex mb-3 ml-5 pt-2 ">
-          {!userReponse ?
+          {!userReponse ? (
             <button
               type="button"
               onClick={handleDeso}
               className="text-white bg-accent hover:bg-opacity-80 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 "
             >
               Sign In
-            </button> :
+            </button>
+          ) : (
             <button
               type="button"
               onClick={handleLogout}
               className="text-white bg-accent hover:bg-opacity-80 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 "
             >
               Sign Out
-            </button>}
+            </button>
+          )}
           <button
             data-collapse-toggle="navbar-cta"
             type="button"
