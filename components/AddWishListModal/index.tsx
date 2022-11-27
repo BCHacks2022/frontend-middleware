@@ -40,7 +40,7 @@ export const AddWishListModal = ({ userProfile, addNewWL }: { userProfile: GetSi
                     user={userProfile}
                     addNewWl={addNewWL}
                   />
-                  <AddManualAccordion content="ss" isOpen={false} />
+                  <AddManualAccordion content="ss" isOpen={false} addNewWl={addNewWL} />
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

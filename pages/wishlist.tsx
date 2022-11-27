@@ -175,7 +175,7 @@ export default function Wishlist() {
                     </div>
                   </td>
                   <td className="py-4">
-                    <button className="border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-red-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                    <button className="border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-blue-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                       View
                     </button>
                     <DeleteWishListModal callback={handleDelete} comp={c} />

@@ -160,7 +160,7 @@ const SearchAccordion = ({ title, isOpen, user, addNewWl }: AccordionProps) => {
                         addToWishList(e, c);
                         addNewWl(c);
                       }}
-                      className="ml-20 border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-red-600 outline-none focus:outline-nonemb-1 ease-linear transition-all duration-150"
+                      className="ml-20 border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-blue-600 outline-none focus:outline-nonemb-1 ease-linear transition-all duration-150"
                     >
                       Add
                     </button>
