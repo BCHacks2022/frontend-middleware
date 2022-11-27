@@ -18,4 +18,5 @@ export class company {
     this.elId = elId;
     this.score = score;
   }
+
 }
