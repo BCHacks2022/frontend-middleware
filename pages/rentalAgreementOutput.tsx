@@ -117,7 +117,7 @@ export default function RentalAgreementOutPut({ missingFields, rentalAgreement }
 
                                                     </div>
                                                 </a>
-                                            </div>) : (<div></div>)}
+                                            </div>) : (<div key={c}></div>)}
                                     </div>
                                 );
                             })}
@@ -125,7 +125,7 @@ export default function RentalAgreementOutPut({ missingFields, rentalAgreement }
                             {warnings.map((c) => {
                                 return (
 
-                                    <div className="flex w-full items-center pt-3 justify-center">
+                                    <div key={c} className="flex w-full items-center pt-3 justify-center">
                                         <div className={` block w-11/12 p-6  border border-gray-200 rounded-lg shadow-md ' }`}>
                                             <div
                                                 key={c as string}

@@ -9,17 +9,17 @@ export const MissingFieldsModal = ({ callback, missingField }: { callback: (text
     const [showModal, setShowModal] = useState(false);
 
     const fixes: any = {
-        "utilities": ["Please select the person responsible for utilities:", <FromOptions options={["Landlord", "Tenant"]} />, "Utilities will be paid by: "],
-        "landlord": ["Please enter landlords name", <StringTextField placeholder="Name" />, "Landlord's name: "],
-        "tenant": ["Please enter tenants name", <StringTextField placeholder="Name" />, "Tenants's name: "],
-        "starting_date": ["Please enter the starting date", <DateField />, " Rent will start on "],
-        "ending_date": ["Please enter the ending date", <DateField />, "Rent will end on "],
-        "rent_price": ["Please enter the rent", <StringTextField placeholder="Price" />, "Subject to the provisions of this Lease, the rent for the Property is "],
-        "pay_day": ["Please enter the day to pay", <StringTextField placeholder="Day of the month" />, "Rent is to be paid on the following day of every month "],
-        "rent_increase": ["Please enter the minimum notice before rent increase", <StringTextField placeholder="Number of days" />, "The Landlord may increase the Rent for the Property upon providing to the Tenant such notice this amount of days before"],
-        "sec_dep": ["Please enter the security deposit", <StringTextField placeholder="Security Deposit" />, "On execution of this Lease, the Tenant will pay the Landlord a security deposit of "],
-        "smoking": ["Is smoking allowed?", <FromOptions options={["Yes", "No"]} />, "Smoking:"],
-        "pets": ["Are pets allowed?", <FromOptions options={["Yes", "No"]} />, "Pets: "],
+        "utilities": ["Please select the person responsible for utilities:", <FromOptions key="i9_zu8" options={["Landlord", "Tenant"]} />, "Utilities will be paid by: "],
+        "landlord": ["Please enter landlords name", <StringTextField key="i9_zu81" placeholder="Name" />, "Landlord's name: "],
+        "tenant": ["Please enter tenants name", <StringTextField key="i9_zu3" placeholder="Name" />, "Tenants's name: "],
+        "starting_date": ["Please enter the starting date", <DateField key="i9_zu0" />, " Rent will start on "],
+        "ending_date": ["Please enter the ending date", <DateField key="il_8" />, "Rent will end on "],
+        "rent_price": ["Please enter the rent", <StringTextField key="d11_11" placeholder="Price" />, "Subject to the provisions of this Lease, the rent for the Property is "],
+        "pay_day": ["Please enter the day to pay", <StringTextField key="d22_22" placeholder="Day of the month" />, "Rent is to be paid on the following day of every month "],
+        "rent_increase": ["Please enter the minimum notice before rent increase", <StringTextField key="fast_" placeholder="Number of days" />, "The Landlord may increase the Rent for the Property upon providing to the Tenant such notice this amount of days before"],
+        "sec_dep": ["Please enter the security deposit", <StringTextField key="hou" placeholder="Security Deposit" />, "On execution of this Lease, the Tenant will pay the Landlord a security deposit of "],
+        "smoking": ["Is smoking allowed?", <FromOptions key="tame_im" options={["Yes", "No"]} />, "Smoking:"],
+        "pets": ["Are pets allowed?", <FromOptions key="pala" options={["Yes", "No"]} />, "Pets: "],
     }
 
     return (
