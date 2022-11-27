@@ -1,5 +1,6 @@
 import { FileUpload } from "../FileUpload";
 import { SelectProvince } from "../SelectProvince";
+import Link from 'next/link'
 
 export const RentalCheckSection = () => {
   return (
@@ -21,10 +22,11 @@ export const RentalCheckSection = () => {
               <SelectProvince />
             </div>
           </div>
-
-          <button className="inline-flex text-white bg-accent rounded-lg border-0 py-2 px-6 focus:outline-none hover:bg-opacity-80 text-lg">
-            Analyze my contract
-          </button>
+          <Link href="/rentalAgreementOutput">
+            <button className="inline-flex text-white bg-accent rounded-lg border-0 py-2 px-6 focus:outline-none hover:bg-opacity-80 text-lg">
+              Analyze my contract
+            </button>
+          </Link>
         </div>
       </div>
     </section>
