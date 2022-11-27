@@ -8,7 +8,7 @@ export const NavBarTile = ({ text, link }: { text: string; link: string }) => {
 		rounded 
 		hover:bg-transparent 
 		p-0 
-		pt-1
+		pt-0
 		md:hover:text-white 
 		text-gray-400 
 		hover:bg-gray-700 

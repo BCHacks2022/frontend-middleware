@@ -100,7 +100,7 @@ export const NavBar = () => {
             <button
               type="button"
               onClick={handleLogout}
-              className="text-white bg-accent hover:bg-opacity-80 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 "
+              className="text-white bg-accent w-40 hover:bg-opacity-80 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-xs px-5 py-2.5 text-center mr-3 md:mr-5 "
             >
               Sign Out
             </button>
