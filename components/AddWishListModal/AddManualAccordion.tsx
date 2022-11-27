@@ -26,7 +26,7 @@ const AddManualAccordion = ({ content, isOpen, addNewWl }: AccordionProps) => {
 
     var c = new company(
       "/placeholder.jpg",
-      "aa",
+      (document.getElementById("titleInput")! as HTMLInputElement).value,
       "",
       "a" + Date.now(),
       'Pending'
