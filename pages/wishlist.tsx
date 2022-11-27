@@ -1,10 +1,7 @@
-import { useState, useEffect } from "react";
 import { company } from "../lib/models/company";
 import { DeleteWishListModal } from "../components/wishlist/deleteFrom";
 import { AddWishListModal } from "../components/AddWishListModal";
 export default function wishlist() {
-  const [showModal, setShowModal] = useState(false);
-
   // facebook, google, mlh
   const companies = [
     new company(
