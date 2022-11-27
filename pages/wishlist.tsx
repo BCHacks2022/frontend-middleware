@@ -1,59 +1,72 @@
 import { company } from "../lib/models/company";
 import { DeleteWishListModal } from "../components/wishlist/deleteFrom";
 import { AddWishListModal } from "../components/AddWishListModal";
-export default function wishlist() {
-  // facebook, google, mlh
-  const companies = [
-    new company(
-      "fb.png",
-      "Facebook",
-      "https://www.facebook.com/privacy/policy/",
-      "fb-el",
-      "14"
-    ),
-    new company(
-      "google.png",
-      "Google",
-      "https://policies.google.com/privacy?hl=en-US",
-      "g-el",
-      "25"
-    ),
-    new company("mlh.png", "MLH", "https://mlh.io/privacy", "mlh-el", "83"),
-    new company(
-      "ddg.png",
-      "DuckDuckGo",
-      "https://duckduckgo.com/privacy",
-      "ddg-el",
-      "93"
-    ),
-    new company(
-      "amazon.png",
-      "Amazon",
-      "https://www.amazon.ca/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ",
-      "am-el",
-      "33"
-    ),
-    new company(
-      "snapchat.png",
-      "Snapchat",
-      "https://snap.com/en-US/privacy/privacy-policy",
-      "sc-el",
-      "35"
-    ),
-    new company(
-      "ig.png",
-      "Instagram",
-      "https://help.instagram.com/155833707900388",
-      "ig-el",
-      "20"
-    ),
-  ];
+import { Deso } from "deso-protocol";
+import { GetSingleProfileResponse } from "deso-protocol-types";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+async function getUser() {
+  const res = localStorage.getItem("deso_user_key");
+  return res;
+}
+
+export default function Wishlist() {
+  const [userResponse, setUserResponse] =
+    useState<GetSingleProfileResponse | null>(null);
+  const [userWish, setUserWish] = useState<company[]>([]);
+
+  var deso: Deso;
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    deso = new Deso();
+    checkLogin();
+  }, []);
+
+  const checkLogin = async () => {
+    // localStorage.setItem("wishlist", [])!
+    const userKey = await getUser();
+    if (userKey != null) {
+      var req = {
+        PublicKeyBase58Check: userKey as string,
+        NoErrorOnMissing: false,
+      };
+      var userProfile = await deso.user.getSingleProfile(req);
+      setUserResponse(userProfile);
+      getUserWish(userProfile);
+    } else {
+      // not logged in this page shouldn't be visible
+      window.location.href = "/privacy";
+    }
+  };
+
+  const getUserWish = async (p: GetSingleProfileResponse) => {
+    if (
+      p!.Profile!.ExtraData != null ||
+      localStorage.getItem("wishlist") != null
+    ) {
+      var data = localStorage.getItem("wishlist")!;
+      if (data) {
+        var wishes = await JSON.parse(data);
+        var compWishes: company[] = [];
+        for (const [key, value] of Object.entries(wishes)) {
+          console.log(value);
+          var j = JSON.parse(value as string);
+          compWishes.push(
+            new company(j["image"], j["name"], j["link"], j["elId"], j["score"])
+          );
+        }
+        setUserWish(compWishes);
+      }
+    }
+  };
 
   const keyUpHandler = (e: any) => {
     var val = e.target.value as string;
     val = val.toLocaleUpperCase();
-    for (var i = 0; i < companies.length; i++) {
-      var c = companies[i] as company;
+    for (var i = 0; i < userWish.length; i++) {
+      var c = userWish[i] as company;
       if (c.name.toUpperCase().indexOf(val) <= -1) {
         document.getElementById(c.elId as string)!.style.display = "none";
       } else {
@@ -65,7 +78,7 @@ export default function wishlist() {
     }
   };
 
-  const handleDelete = (id: String) => {
+  const handleDelete = async (id: String) => {
     const animate = (start: number, end: number, el: any) => {
       if (start <= end) {
         el.style.display = "none";
@@ -78,6 +91,23 @@ export default function wishlist() {
       }
     };
     animate(0, -1500, document.getElementById(id as string)!);
+    var data = await JSON.parse(localStorage.getItem("wishlist")!);
+    var deletedIndex = -1;
+    for (const [key, value] of Object.entries(data)) {
+      var comp = JSON.parse(value as string);
+      if (comp["elId"] == id) {
+        delete data[key];
+        break;
+      }
+    }
+    console.log(data);
+    localStorage.setItem("wishlist", JSON.stringify(data));
+  };
+
+  const addNewWL = (c: company) => {
+    var wishes = [...userWish];
+    wishes.push(c);
+    setUserWish(wishes);
   };
 
   return (
@@ -93,7 +123,7 @@ export default function wishlist() {
               placeholder="Search for companies"
             />
           </div>
-          <AddWishListModal />
+          <AddWishListModal userProfile={userResponse} addNewWL={addNewWL} />
         </div>
         <table className="w-full text-sm text-left text-gray-500 bg-white">
           <thead className="text-xs text-gray-700 uppercase bg-[#1d3557] dark:text-gray-400">
@@ -112,22 +142,21 @@ export default function wishlist() {
               </th>
             </tr>
           </thead>
-          <tbody>
-            {companies.map((c) => {
+          <tbody id="tbody_wl">
+            {userWish.map((c: company) => {
               return (
                 <tr
                   key={c.elId as string}
                   className="companyRow relative bg-white border-b dark:border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-100 cursor-pointer"
                   id={c.elId as string}
                 >
-                  <th
-                    scope="row"
-                    className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    <img
+                  <th className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
+                    <Image
                       className="w-12 h-12 rounded-full"
+                      alt="company logo"
+                      width={50}
+                      height={50}
                       src={c.image as string}
-                      alt="Jese image"
                     />
                     <div className="px-5 text-base font-semibold text-gray-600">
                       {c.name}
@@ -146,7 +175,7 @@ export default function wishlist() {
                     </div>
                   </td>
                   <td className="py-4">
-                    <button className="border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-red-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                    <button className="border border-blue-400 text-blue-400 font-bold uppercase text-xs px-6 py-3 rounded  hover:text-blue-600 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                       View
                     </button>
                     <DeleteWishListModal callback={handleDelete} comp={c} />

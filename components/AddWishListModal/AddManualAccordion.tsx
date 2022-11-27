@@ -1,10 +1,12 @@
 import React, { useState, useRef } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { company } from "../../lib/models/company";
 type AccordionProps = {
   content: string;
   isOpen: boolean;
+  addNewWl: (c: company) => void;
 };
-const AddManualAccordion = ({ content, isOpen }: AccordionProps) => {
+const AddManualAccordion = ({ content, isOpen, addNewWl }: AccordionProps) => {
   const [isOpened, setOpened] = useState<boolean>(isOpen);
   const [height, setHeight] = useState<string>("0px");
   const contentElement = useRef(null);
@@ -17,6 +19,30 @@ const AddManualAccordion = ({ content, isOpen }: AccordionProps) => {
       !isOpened ? `${contentElement.current.scrollHeight ?? ""}px` : "0px"
     );
   };
+
+  const handleAdd = () => {
+    var data = localStorage.getItem("wishlist");
+    console.log(1);
+
+    var c = new company(
+      "/placeholder.jpg",
+      (document.getElementById("titleInput")! as HTMLInputElement).value,
+      "",
+      "a" + Date.now(),
+      'Pending'
+    );
+    if (data) {
+      var prev = JSON.parse(data);
+      var i = prev != null ? Object.keys(prev).length : 0;
+      prev[c.elId as string] = c.toString();
+      localStorage.setItem("wishlist", JSON.stringify(prev));
+    } else {
+      prev = { 0: c.toString() };
+      localStorage.setItem("wishlist", JSON.stringify(prev));
+    }
+    return c;
+  };
+
   return (
     <div className="rounded-xl pt-2 ">
       <div
@@ -68,7 +94,10 @@ const AddManualAccordion = ({ content, isOpen }: AccordionProps) => {
               <button
                 className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 mb-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => {}}
+                onClick={() => {
+                  var c = handleAdd();
+                  addNewWl(c);
+                }}
               >
                 Add to WishList
               </button>

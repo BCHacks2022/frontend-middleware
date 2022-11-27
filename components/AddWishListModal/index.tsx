@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddManualAccordion from "./AddManualAccordion";
 import SearchAccordion from "./SearchAccordion";
+import { GetSingleProfileRequest, GetSingleProfileResponse } from "deso-protocol-types";
+import { Deso } from "deso-protocol";
+import { company } from "../../lib/models/company";
 
-export const AddWishListModal = () => {
+export const AddWishListModal = ({ userProfile, addNewWL }: { userProfile: GetSingleProfileResponse | null, addNewWL: (c: company) => void }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -34,8 +37,10 @@ export const AddWishListModal = () => {
                     title="Search From List of Companies"
                     content="Content One"
                     isOpen={true}
+                    user={userProfile}
+                    addNewWl={addNewWL}
                   />
-                  <AddManualAccordion content="ss" isOpen={false} />
+                  <AddManualAccordion content="ss" isOpen={false} addNewWl={addNewWL} />
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

@@ -1,17 +1,72 @@
+import { Deso } from "deso-protocol";
+import { GetSingleProfileResponse } from "deso-protocol-types";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { NavBarTile } from "./NavBarTile";
 
+async function getUser() {
+  const res = localStorage.getItem("deso_user_key");
+  return res;
+}
+
 export const NavBar = () => {
+  const [userReponse, setUserResponse] =
+    useState<GetSingleProfileResponse | null>(null);
+  var deso: Deso;
+  const router = useRouter();
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    deso = new Deso();
+    checkLogin();
+  }, []);
+
+  const checkLogin = async () => {
+    const userKey = await getUser();
+    console.log(userKey);
+    if (userKey != "null") {
+      var req = {
+        PublicKeyBase58Check: userKey as string,
+        NoErrorOnMissing: false,
+      };
+      var userProfile = await deso.user.getSingleProfile(req);
+      console.log(1111);
+
+      setUserResponse(userProfile);
+    }
+  };
+
+  const handleDeso = async () => {
+    console.log("userProfile");
+    let user = await deso.identity.login();
+
+    var req = { PublicKeyBase58Check: user.key, NoErrorOnMissing: false };
+    var userProfile = await deso.user.getSingleProfile(req);
+
+    setUserResponse(userProfile);
+  };
+
+  const handleLogout = async () => {
+    const deso = new Deso();
+    await deso.identity.logout(
+      userReponse!.Profile?.PublicKeyBase58Check as string
+    );
+    setUserResponse(null);
+    router.push("/privacy");
+  };
+
   return (
-    <nav className="bg-primary border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
+    <nav className="bg-primary border-gray-200 px-2  rounded ">
       <div className="flex  justify-between">
         <div className="container flex flex-wrap  justify-start mx-auto">
           <a href="#" className="flex items-center">
             <Image
               src="/logolight.png"
-              className=" mx-3 "
+              className=""
               alt="Soteria Logo"
-              width={100}
+              width={120}
               height={50}
             />
           </a>
@@ -23,17 +78,33 @@ export const NavBar = () => {
             <ul className="flex flex-col p-4 mt-4 content-start border border-primary rounded-lg bg-primary md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-primary ">
               <NavBarTile text="Rental Contract" link="/" />
               <NavBarTile text="Privacy Policy" link="/privacy" />
-              <NavBarTile text="Wishlist" link="/wishlist" />
+
+              {userReponse ? (
+                <NavBarTile text="Wishlist" link="/wishlist" />
+              ) : (
+                <div></div>
+              )}
             </ul>
           </div>
         </div>
-        <div className="flex md:order-2 m-2 pl-5 ">
-          <button
-            type="button"
-            className="text-white bg-accent hover:bg-opacity-80 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 "
-          >
-            Sign In
-          </button>
+        <div className="flex mb-3 ml-5 pt-2 ">
+          {!userReponse ? (
+            <button
+              type="button"
+              onClick={handleDeso}
+              className="text-white bg-accent hover:bg-opacity-80 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 "
+            >
+              Sign In
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="text-white bg-accent hover:bg-opacity-80 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 "
+            >
+              Sign Out
+            </button>
+          )}
           <button
             data-collapse-toggle="navbar-cta"
             type="button"
